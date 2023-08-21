@@ -26,8 +26,8 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
-    scaffoldBackgroundColor: const Color(0xFF000E1F),
-    colorSchemeSeed: Colors.blue,
+    scaffoldBackgroundColor: const Color(0xFF1A0700),
+    colorSchemeSeed: Colors.deepOrange,
     fontFamily: 'Nexa',
     appBarTheme: const AppBarTheme(
       centerTitle: true,
@@ -48,5 +48,5 @@ class AppTheme {
 extension ColorSchemeS on ColorScheme {
   Color get titleColor => brightness == Brightness.light
       ? const Color(0xFF512DA8)
-      : const Color(0xFF2196F3);
+      : const Color(0xFFFF5722);
 }

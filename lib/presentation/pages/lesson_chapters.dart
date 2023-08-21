@@ -46,7 +46,8 @@ class _LessonChaptersState extends State<LessonChapters> {
       ),
       body: FutureBuilder<List<LessonModel>>(
         future: mainAppState.getDatabaseQuery.getAllLessons(),
-        builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,26 +86,45 @@ class _LessonChaptersState extends State<LessonChapters> {
                         color: appColors.titleColor,
                       ),
                     ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/answer_content',
-                          arguments: LessonArguments(
-                            lessonId: mainAppState.getLastLesson,
+                    child: ScreenTypeLayout.builder(
+                      mobile: (BuildContext context) => InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/answer_content',
+                            arguments: LessonArguments(
+                              lessonId: mainAppState.getLastLesson,
+                            ),
+                          );
+                        },
+                        borderRadius: AppStyles.mainBorderRadius,
+                        child: Padding(
+                          padding: AppStyles.mainPaddingMini,
+                          child: Text(
+                            '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      },
-                      borderRadius: AppStyles.mainBorderRadius,
-                      child: Padding(
-                        padding: AppStyles.mainPaddingMini,
-                        child: Text(
-                          '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      tablet: (BuildContext context) => InkWell(
+                        onTap: () {
+                          mainAppState.changeLessonId = mainAppState.getLastLesson;
+                        },
+                        borderRadius: AppStyles.mainBorderRadius,
+                        child: Padding(
+                          padding: AppStyles.mainPaddingMini,
+                          child: Text(
+                            '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
