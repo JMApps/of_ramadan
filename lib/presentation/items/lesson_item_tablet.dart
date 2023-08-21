@@ -25,7 +25,8 @@ class LessonItemTablet extends StatelessWidget {
       shape: AppStyles.mainShape,
       child: ListTile(
         onTap: () {
-          mainAppState.changeQuestionId = model.id;
+          mainAppState.changeLessonId = model.id;
+          mainAppState.saveLastLesson = model.id;
         },
         shape: AppStyles.mainShape,
         contentPadding: AppStyles.mainPaddingMini,

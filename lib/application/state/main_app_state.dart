@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:of_ramadan/application/strings/app_constraints.dart';
 import 'package:of_ramadan/data/database_query.dart';
 
 class MainAppState extends ChangeNotifier {
+  final _contentSettingsBox = Hive.box(AppConstraints.keyAppSettingsBox);
+
   final DatabaseQuery _databaseQuery = DatabaseQuery();
 
   DatabaseQuery get getDatabaseQuery => _databaseQuery;
@@ -10,8 +14,18 @@ class MainAppState extends ChangeNotifier {
 
   int get getQuestionId => _lessonId;
 
-  set changeQuestionId(int questionId) {
-    _lessonId = questionId;
+  int _lastLesson = -1;
+
+  int get getLastLesson => _lastLesson;
+
+  set saveLastLesson(int lessonId) {
+    _lastLesson = lessonId;
+    _contentSettingsBox.put(AppConstraints.keyLastHead, lessonId);
+    notifyListeners();
+  }
+
+  set changeLessonId(int lessonId) {
+    _lessonId = lessonId;
     notifyListeners();
   }
 
@@ -24,8 +38,12 @@ class MainAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addRemoveBookmark(int favoriteState, int questionId) async {
-    _databaseQuery.addRemoveFavorite(favoriteState, questionId);
+  Future<void> addRemoveBookmark(int favoriteState, int lessonId) async {
+    _databaseQuery.addRemoveFavorite(favoriteState, lessonId);
     notifyListeners();
+  }
+
+  MainAppState() {
+    _lastLesson = _contentSettingsBox.get(AppConstraints.keyLastHead, defaultValue: -1);
   }
 }

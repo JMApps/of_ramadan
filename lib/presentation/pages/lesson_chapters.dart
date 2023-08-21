@@ -1,10 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:of_ramadan/application/state/main_app_state.dart';
 import 'package:of_ramadan/application/strings/app_strings.dart';
 import 'package:of_ramadan/application/styles/app_styles.dart';
+import 'package:of_ramadan/application/themes/app_theme.dart';
+import 'package:of_ramadan/data/arguments/lesson_arguments.dart';
 import 'package:of_ramadan/data/model/lesson_model.dart';
 import 'package:of_ramadan/presentation/items/lesson_item.dart';
 import 'package:of_ramadan/presentation/items/lesson_item_tablet.dart';
@@ -24,6 +24,7 @@ class _LessonChaptersState extends State<LessonChapters> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme appColors = Theme.of(context).colorScheme;
     final MainAppState mainAppState = Provider.of<MainAppState>(context);
     return Scaffold(
       appBar: AppBar(
@@ -47,26 +48,69 @@ class _LessonChaptersState extends State<LessonChapters> {
         future: mainAppState.getDatabaseQuery.getAllLessons(),
         builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
           if (snapshot.hasData) {
-            return CupertinoScrollbar(
-              controller: _scrollController,
-              child: ListView.builder(
-                controller: _scrollController,
-                scrollDirection: Axis.vertical,
-                padding: AppStyles.mainPaddingMini,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ScreenTypeLayout.builder(
-                    mobile: (BuildContext context) => LessonItem(
-                      model: snapshot.data![index],
-                      index: index,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: CupertinoScrollbar(
+                    controller: _scrollController,
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      scrollDirection: Axis.vertical,
+                      padding: AppStyles.mainPaddingMini,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ScreenTypeLayout.builder(
+                          mobile: (BuildContext context) => LessonItem(
+                            model: snapshot.data![index],
+                            index: index,
+                          ),
+                          tablet: (BuildContext context) => LessonItemTablet(
+                            model: snapshot.data![index],
+                            index: index,
+                          ),
+                        );
+                      },
                     ),
-                    tablet: (BuildContext context) => LessonItemTablet(
-                      model: snapshot.data![index],
-                      index: index,
+                  ),
+                ),
+                Visibility(
+                  visible: mainAppState.getLastLesson > 0 ? true : false,
+                  child: Card(
+                    margin: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppStyles.mainBorderRadius,
+                      side: BorderSide(
+                        width: 1,
+                        color: appColors.titleColor,
+                      ),
                     ),
-                  );
-                },
-              ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/answer_content',
+                          arguments: LessonArguments(
+                            lessonId: mainAppState.getLastLesson,
+                          ),
+                        );
+                      },
+                      borderRadius: AppStyles.mainBorderRadius,
+                      child: Padding(
+                        padding: AppStyles.mainPaddingMini,
+                        child: Text(
+                          '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           } else if (snapshot.hasError) {
             return Center(

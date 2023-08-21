@@ -26,12 +26,8 @@ class LessonContentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme appColors = Theme.of(context).colorScheme;
     return FutureBuilder<List<LessonModel>>(
-      future: context
-          .read<MainAppState>()
-          .getDatabaseQuery
-          .getLessonContent(lessonId),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
+      future: context.read<MainAppState>().getDatabaseQuery.getLessonContent(lessonId),
+      builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
         if (snapshot.hasData) {
           final LessonModel model = snapshot.data![0];
           return Consumer<ContentSettingsState>(
@@ -152,8 +148,7 @@ class LessonContentPage extends StatelessWidget {
 
   String _parseHtmlText(String htmlText) {
     final documentText = parse(htmlText);
-    final String parsedString =
-        parse(documentText.body!.text).documentElement!.text;
+    final String parsedString = parse(documentText.body!.text).documentElement!.text;
     return parsedString;
   }
 }
