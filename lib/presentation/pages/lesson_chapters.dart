@@ -118,8 +118,7 @@ class _LessonChaptersState extends State<LessonChapters> {
                           child: Text(
                             '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
                             style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                             textAlign: TextAlign.center,
                           ),

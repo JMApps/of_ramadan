@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "lessons-256 2.jpg",
+      "filename" : "lessons_512 2.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "lessons-256.jpg",
+      "filename" : "lessons_512.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "lessons-256 1.jpg",
+      "filename" : "lessons_512 1.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
