@@ -24,7 +24,7 @@ class LessonContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme appColors = Theme.of(context).colorScheme;
+    final ThemeData appTheme = Theme.of(context);
     return FutureBuilder<List<LessonModel>>(
       future: context.read<MainAppState>().getDatabaseQuery.getLessonContent(lessonId),
       builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
@@ -49,6 +49,7 @@ class LessonContentPage extends StatelessWidget {
                               onPressed: () {
                                 Navigator.pushNamed(context, '/app_settings');
                               },
+                              tooltip: AppStrings.settings,
                               icon: const Icon(CupertinoIcons.settings),
                             ),
                             IconButton(
@@ -61,6 +62,7 @@ class LessonContentPage extends StatelessWidget {
                                       const Rect.fromLTWH(0, 0, 10, 10 / 2),
                                 );
                               },
+                              tooltip: AppStrings.share,
                               icon: const Icon(CupertinoIcons.share),
                             ),
                           ],
@@ -75,7 +77,7 @@ class LessonContentPage extends StatelessWidget {
                                 model.titleChapter,
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: appColors.titleColor,
+                                  color: appTheme.colorScheme.titleColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign: TextAlign.center,
@@ -92,13 +94,13 @@ class LessonContentPage extends StatelessWidget {
                                 fontSize: FontSize(settingsState.getTextSize),
                                 fontFamily: AppStyles.getFont[settingsState.getFontIndex],
                                 textAlign: AppStyles.getAlign[settingsState.getTextAlignIndex],
-                                color: settingsState.getDarkTheme
+                                color: appTheme.brightness == Brightness.dark
                                     ? settingsState.getDarkTextColor
                                     : settingsState.getLightTextColor,
                               ),
                               'a': Style(
                                 fontSize: FontSize(settingsState.getTextSize),
-                                color: appColors.titleColor,
+                                color: appTheme.colorScheme.titleColor,
                                 fontWeight: FontWeight.bold,
                               ),
                               'small': Style(

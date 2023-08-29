@@ -6,6 +6,8 @@ import 'package:of_ramadan/data/database_query.dart';
 class MainAppState extends ChangeNotifier {
   final _contentSettingsBox = Hive.box(AppConstraints.keyAppSettingsBox);
 
+  final _favoritesBox = Hive.box(AppConstraints.keyFavoritesList);
+
   final DatabaseQuery _databaseQuery = DatabaseQuery();
 
   DatabaseQuery get getDatabaseQuery => _databaseQuery;
@@ -17,6 +19,26 @@ class MainAppState extends ChangeNotifier {
   int _lastLesson = -1;
 
   int get getLastLesson => _lastLesson;
+
+  List<int> _favoriteLessons = [];
+
+  List<int> get getFavoriteLessons => _favoriteLessons;
+
+  toggleFavorite(int id) {
+    final exist = _favoriteLessons.contains(id);
+    if (exist) {
+      _favoriteLessons.remove(id);
+    } else {
+      _favoriteLessons.add(id);
+    }
+    _favoritesBox.put(AppConstraints.keyFavoritesList, _favoriteLessons);
+    notifyListeners();
+  }
+
+  bool supplicationIsFavorite(int id) {
+    final exist = _favoriteLessons.contains(id);
+    return exist;
+  }
 
   set saveLastLesson(int lessonId) {
     _lastLesson = lessonId;
@@ -38,12 +60,8 @@ class MainAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addRemoveBookmark(int favoriteState, int lessonId) async {
-    _databaseQuery.addRemoveFavorite(favoriteState, lessonId);
-    notifyListeners();
-  }
-
   MainAppState() {
     _lastLesson = _contentSettingsBox.get(AppConstraints.keyLastHead, defaultValue: -1);
+    _favoriteLessons = _favoritesBox.get(AppConstraints.keyFavoritesList, defaultValue: <int>[]);
   }
 }

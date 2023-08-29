@@ -21,14 +21,14 @@ class _LessonFavoritesState extends State<LessonFavorites> {
 
   @override
   Widget build(BuildContext context) {
+    final MainAppState mainAppState = Provider.of<MainAppState>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.bookmarks),
       ),
       body: FutureBuilder<List<LessonModel>>(
-        future: context.watch<MainAppState>().getDatabaseQuery.getFavoriteLessons(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
+        future: mainAppState.getDatabaseQuery.getFavoriteLessons(favorites: mainAppState.getFavoriteLessons),
+        builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
           if (snapshot.hasData) {
             return CupertinoScrollbar(
               controller: _scrollController,

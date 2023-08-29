@@ -12,9 +12,9 @@ class DatabaseQuery {
     return allLessons!;
   }
 
-  Future<List<LessonModel>> getFavoriteLessons() async {
+  Future<List<LessonModel>> getFavoriteLessons({required List<int> favorites}) async {
     final Database dbClient = await _databaseHelper.db;
-    var res = await dbClient.query('Table_of_lessons_ramadan', where: 'favorite_state == 1');
+    var res = await dbClient.query('Table_of_lessons_ramadan', where: 'id IN (${favorites.map((id) => '?').join(', ')})', whereArgs: favorites);
     List<LessonModel>? favoriteLessons = res.isNotEmpty ? res.map((c) => LessonModel.fromMap(c)).toList() : null;
     return favoriteLessons!;
   }
@@ -24,10 +24,5 @@ class DatabaseQuery {
     var res = await dbClient.query('Table_of_lessons_ramadan', where: 'id == $lessonId');
     List<LessonModel>? chapterContent = res.isNotEmpty ? res.map((c) => LessonModel.fromMap(c)).toList() : null;
     return chapterContent!;
-  }
-
-  Future<void> addRemoveFavorite(int state, int id) async {
-    final Database dbClient = await _databaseHelper.db;
-    await dbClient.rawQuery('UPDATE Table_of_lessons_ramadan SET favorite_state = $state WHERE id == $id');
   }
 }

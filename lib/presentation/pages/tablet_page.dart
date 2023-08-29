@@ -39,10 +39,12 @@ class _TabletPageState extends State<TabletPage> {
                 items: const [
                   BottomNavigationBarItem(
                     label: AppStrings.heads,
+                    tooltip: AppStrings.heads,
                     icon: Icon(CupertinoIcons.collections),
                   ),
                   BottomNavigationBarItem(
                     label: AppStrings.bookmarks,
+                    tooltip: AppStrings.bookmarks,
                     icon: Icon(CupertinoIcons.bookmark),
                   ),
                 ],

@@ -46,8 +46,7 @@ class _LessonChaptersState extends State<LessonChapters> {
       ),
       body: FutureBuilder<List<LessonModel>>(
         future: mainAppState.getDatabaseQuery.getAllLessons(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<LessonModel>> snapshot) {
           if (snapshot.hasData) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,7 +57,7 @@ class _LessonChaptersState extends State<LessonChapters> {
                     child: ListView.builder(
                       controller: _scrollController,
                       scrollDirection: Axis.vertical,
-                      padding: AppStyles.mainPaddingMini,
+                      padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ScreenTypeLayout.builder(
@@ -78,7 +77,7 @@ class _LessonChaptersState extends State<LessonChapters> {
                 Visibility(
                   visible: mainAppState.getLastLesson > 0 ? true : false,
                   child: Card(
-                    margin: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+                    margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: AppStyles.mainBorderRadius,
                       side: BorderSide(
@@ -104,7 +103,6 @@ class _LessonChaptersState extends State<LessonChapters> {
                             '${AppStrings.lastHead} ${mainAppState.getLastLesson - 1} ${AppStrings.head}',
                             style: const TextStyle(
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),

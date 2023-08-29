@@ -26,7 +26,9 @@ class DatabaseHelper {
         ? await getExternalStorageDirectory()
         : await getApplicationSupportDirectory();
 
-    String path = join(documentDirectory!.path, 'lessons_ramadan_1.db');
+    const String databaseName = 'lessons_ramadan_1.db';
+
+    String path = join(documentDirectory!.path, databaseName);
     var exists = await databaseExists(path);
 
     String toDeleteDB = '${documentDirectory.path}/lessons_ramadan.db';
@@ -44,7 +46,7 @@ class DatabaseHelper {
         Exception('Invalid database');
       }
 
-      ByteData data = await rootBundle.load(join('assets/databases', 'lessons_ramadan_1.db'));
+      ByteData data = await rootBundle.load(join('assets/databases', databaseName));
       List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       await File(path).writeAsBytes(bytes, flush: true);
     }

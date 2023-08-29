@@ -10,6 +10,9 @@ class AppStrings {
   static const String lastHead = 'Продолжить чтение';
   static const String head = 'главы';
   static const String errorInLoad = 'Ошибка при загрузке';
+  static const String added = 'Добавлено';
+  static const String removed = 'Удалено';
+  static const String share = 'Поделиться';
 
   // Settings
   static const String textFont = 'Шрифт';
@@ -19,6 +22,7 @@ class AppStrings {
   static const String forLightTheme = 'Для светлой темы';
   static const String forDarkTheme = 'Для темной темы';
   static const String close = 'Закрыть';
+  static const String adaptiveTheme = 'Адаптивная тема';
   static const String darkTheme = 'Темная тема';
-  static const String displayAlways = 'Дисплей всегда активен';
+  static const String displayAlways = 'Дисплей всегда включён';
 }
