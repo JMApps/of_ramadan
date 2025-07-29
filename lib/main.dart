@@ -1,8 +1,4 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:of_ramadan/application/routes/app_routes.dart';
 import 'package:of_ramadan/application/state/content_settings_state.dart';
@@ -18,17 +14,11 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
-      ),
-    );
-  }
+
   await Hive.initFlutter();
   await Hive.openBox(AppConstraints.keyAppSettingsBox);
   await Hive.openBox(AppConstraints.keyFavoritesList);
+
   runApp(
     MultiProvider(
       providers: [
@@ -55,26 +45,13 @@ class RootPage extends StatelessWidget {
       onGenerateRoute: AppRoutes.onGenerateRoute,
       title: AppStrings.appName,
       theme: AppTheme.lightTheme,
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.trackpad,
-          PointerDeviceKind.unknown,
-        },
-      ),
       builder: (context, child) {
         return ScrollConfiguration(
           behavior: DefaultScrollBehavior(),
           child: child!,
         );
       },
-      themeMode: settings.getAdaptiveTheme
-          ? ThemeMode.system
-          : settings.getDarkTheme
-              ? ThemeMode.dark
-              : ThemeMode.light,
+      themeMode: settings.getAdaptiveTheme ? ThemeMode.system : settings.getDarkTheme ? ThemeMode.dark : ThemeMode.light,
       darkTheme: AppTheme.darkTheme,
       home: ScreenTypeLayout.builder(
         mobile: (BuildContext context) => const MainPage(),

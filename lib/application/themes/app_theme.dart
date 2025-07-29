@@ -6,7 +6,7 @@ class AppTheme {
     brightness: Brightness.light,
     useMaterial3: true,
     colorSchemeSeed: Colors.purple,
-    fontFamily: 'Nexa',
+    fontFamily: 'PT Sans',
     appBarTheme: const AppBarTheme(
       centerTitle: true,
     ),
@@ -26,7 +26,7 @@ class AppTheme {
     brightness: Brightness.dark,
     useMaterial3: true,
     colorSchemeSeed: Colors.deepOrange,
-    fontFamily: 'Nexa',
+    fontFamily: 'PT Sans',
     appBarTheme: const AppBarTheme(
       centerTitle: true,
     ),

@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       style: appTheme.textTheme.headlineMedium,
                     ),
                     2: Text(
-                      'Nexa',
+                      'PT Sans',
                       style: appTheme.textTheme.headlineMedium,
                     ),
                   },
